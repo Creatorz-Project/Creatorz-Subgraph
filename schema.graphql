@@ -1,6 +1,74 @@
-type ExampleEntity @entity {
-  id: Bytes!
-  count: BigInt!
-  Id: BigInt! # uint256
-  URI: String! # string
+type Video @entity {
+  id: ID!
+  RoomId: BigInt! # uint256
+  Creator: Bytes! # address
+  owner: Bytes! # address
+  Price: BigInt! # uint256
+  SocialTokenId: BigInt! # uint256
+  OwnerPercentage: BigInt! # uint256
+  HolderPercentage: BigInt! # uint256
+  Beneficiaries: [Bytes!]! # address[]
+  Listed: Boolean! # bool
+  Published: Boolean! # bool
+  MetadataURI: String! # string
+  AdsEnabled: Boolean! # bool
+  CreatedDate: String! # string
+  TotalEarnings: BigInt! # uint256
+  LastPublishedDate: String! # string
+}
+type Room @entity {
+  id: ID!
+  RoomId: BigInt!
+  Creator: Bytes!
+  Owner: Bytes!
+  URI: String!
+  IsListed: Boolean!
+  Videos: [BigInt!]!
+  Price: BigInt!
+  DisplayCharge: BigInt!
+  TotalEarning: BigInt!
+  CreatedDate: String!
+}
+
+type SocialTokenHolding @entity {
+  id: ID!
+  SocialTokenId: BigInt!
+  Creator: Bytes!
+  Holder: Bytes!
+  IsLaunched: Boolean!
+  URI: String!
+  LaunchingPrice: BigInt!
+  TotalAmountMinted: BigInt!
+  AmountAvailbleforSale: BigInt!
+  AmountOwnedByHolder: BigInt!
+  AmountListedByHolder: BigInt!
+  PriceSetByHolder: BigInt!
+  MaxHoldingPerWallet: BigInt!
+}
+
+type Ad @entity {
+  id: ID!
+  URI: String!
+  Advertiser: Bytes!
+  PublishingRooms: [BigInt!]!
+  Active: Boolean!
+  TotalSpent: BigInt!
+  CreatedDate: String!
+  CurrentBudget: BigInt!
+  MaxBudget: BigInt!
+  TotalViews: BigInt!
+}
+
+type User @entity {
+  id: String!
+  Address: Bytes!
+  RoomsOwned: [BigInt!]!
+  SocialTokensOwned: [BigInt!]!
+  VideosOwned: [BigInt!]!
+  TotalEarningByRooms: BigInt!
+  TotalEarningBySocialTokens: BigInt!
+  TotalEarningByVideos: BigInt!
+  BlockNumber: BigInt!
+  BlockTimestamp: BigInt!
+  TransactionHash: Bytes!
 }
