@@ -1,0 +1,54 @@
+specVersion: 0.0.5
+schema:
+  file: ./schema.graphql
+dataSources:
+  - kind: ethereum
+    name: Token
+    network: mumbai
+    source:
+      address: "0xC3990AbC1bc52Dd2751dE6696E1f88c4Eef0a7aF"
+      abi: Token
+      startBlock: 35547577
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.7
+      language: wasm/assemblyscript
+      entities:
+        - AdCreated
+        - ApprovalForAll
+        - RoomMinted
+        - TokenLaunched
+        - TokenListed
+        - TokenMinted
+        - TokenSold
+        - TransferBatch
+        - TransferSingle
+        - URI
+        - VideoMinted
+      abis:
+        - name: Token
+          file: ./abis/Token.json
+      eventHandlers:
+        - event: AdCreated(uint256,string,address)
+          handler: handleAdCreated
+        - event: ApprovalForAll(indexed address,indexed address,bool)
+          handler: handleApprovalForAll
+        - event: RoomMinted(uint256,string,address)
+          handler: handleRoomMinted
+        - event: TokenLaunched(uint256)
+          handler: handleTokenLaunched
+        - event: TokenListed(uint256,uint256,uint256)
+          handler: handleTokenListed
+        - event: TokenMinted(uint256,string,uint256,uint256,bool,address,uint256,uint256)
+          handler: handleTokenMinted
+        - event: TokenSold(uint256,uint256,address,address)
+          handler: handleTokenSold
+        - event: TransferBatch(indexed address,indexed address,indexed address,uint256[],uint256[])
+          handler: handleTransferBatch
+        - event: TransferSingle(indexed address,indexed address,indexed address,uint256,uint256)
+          handler: handleTransferSingle
+        - event: URI(string,indexed uint256)
+          handler: handleURI
+        - event: VideoMinted(uint256,string,address)
+          handler: handleVideoMinted
+      file: ./src/token.ts
