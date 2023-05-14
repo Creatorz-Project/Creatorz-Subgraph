@@ -1,12 +1,12 @@
 type Video @entity {
   id: ID!
-  RoomId: BigInt! # uint256
+  RoomId: BigInt # uint256
   Creator: Bytes! # address
   owner: Bytes! # address
   Price: BigInt! # uint256
-  SocialTokenId: BigInt! # uint256
-  OwnerPercentage: BigInt! # uint256
-  HolderPercentage: BigInt! # uint256
+  SocialTokenId: BigInt # uint256
+  OwnerPercentage: BigInt # uint256
+  HolderPercentage: BigInt # uint256
   Beneficiaries: [Bytes!]! # address[]
   Listed: Boolean! # bool
   Published: Boolean! # bool
@@ -14,7 +14,7 @@ type Video @entity {
   AdsEnabled: Boolean! # bool
   CreatedDate: String! # string
   TotalEarnings: BigInt! # uint256
-  LastPublishedDate: String! # string
+  LastPublishedDate: String # string
 }
 type Room @entity {
   id: ID!
@@ -44,10 +44,12 @@ type SocialTokenHolding @entity {
   AmountListedByHolder: BigInt!
   PriceSetByHolder: BigInt!
   MaxHoldingPerWallet: BigInt!
+  VideoId: BigInt!
 }
 
 type Ad @entity {
   id: ID!
+  AdId: BigInt!
   URI: String!
   Advertiser: Bytes!
   PublishingRooms: [BigInt!]!
@@ -56,19 +58,4 @@ type Ad @entity {
   CreatedDate: String!
   CurrentBudget: BigInt!
   MaxBudget: BigInt!
-  TotalViews: BigInt!
-}
-
-type User @entity {
-  id: String!
-  Address: Bytes!
-  RoomsOwned: [BigInt!]!
-  SocialTokensOwned: [BigInt!]!
-  VideosOwned: [BigInt!]!
-  TotalEarningByRooms: BigInt!
-  TotalEarningBySocialTokens: BigInt!
-  TotalEarningByVideos: BigInt!
-  BlockNumber: BigInt!
-  BlockTimestamp: BigInt!
-  TransactionHash: Bytes!
 }

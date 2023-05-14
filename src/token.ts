@@ -1,88 +1,77 @@
-import { BigInt } from "@graphprotocol/graph-ts"
+import { BigInt, Bytes } from "@graphprotocol/graph-ts";
 import {
-  Token,
   AdCreated,
-  ApprovalForAll,
   RoomMinted,
-  TokenLaunched,
-  TokenListed,
   TokenMinted,
-  TokenSold,
-  TransferBatch,
-  TransferSingle,
-  URI,
-  VideoMinted
-} from "../generated/Token/Token"
-import { ExampleEntity } from "../generated/schema"
+  VideoMinted,
+} from "../generated/Token/Token";
+import { Ad, Room, SocialTokenHolding, Video } from "../generated/schema";
 
 export function handleAdCreated(event: AdCreated): void {
-  // Entities can be loaded from the store using a string ID; this ID
-  // needs to be unique across all entities of the same type
-  let entity = ExampleEntity.load(event.transaction.from)
-
-  // Entities only exist after they have been saved to the store;
-  // `null` checks allow to create entities on demand
-  if (!entity) {
-    entity = new ExampleEntity(event.transaction.from)
-
-    // Entity fields can be set using simple assignments
-    entity.count = BigInt.fromI32(0)
-  }
-
-  // BigInt and BigDecimal math are supported
-  entity.count = entity.count + BigInt.fromI32(1)
-
-  // Entity fields can be set based on event parameters
-  entity.Id = event.params.Id
-  entity.URI = event.params.URI
-
-  // Entities can be written to the store with `.save()`
-  entity.save()
-
-  // Note: If a handler doesn't require existing field values, it is faster
-  // _not_ to load the entity from the store. Instead, create it fresh with
-  // `new Entity(...)`, set the fields that should be updated and save the
-  // entity back to the store. Fields that were not set or unset remain
-  // unchanged, allowing for partial updates to be applied.
-
-  // It is also possible to access smart contracts from mappings. For
-  // example, the contract that has emitted the event can be connected to
-  // with:
-  //
-  // let contract = Contract.bind(event.address)
-  //
-  // The following functions can then be called on this contract to access
-  // state variables and other data:
-  //
-  // - contract.balanceOf(...)
-  // - contract.balanceOfBatch(...)
-  // - contract.getAd(...)
-  // - contract.getBalance(...)
-  // - contract.getRoom(...)
-  // - contract.getSocialToken(...)
-  // - contract.getSocialTokenHolder(...)
-  // - contract.getVideo(...)
-  // - contract.isApprovedForAll(...)
-  // - contract.supportsInterface(...)
-  // - contract.uri(...)
+  let ad = new Ad(event.params.Id.toString());
+  ad.AdId = event.params.Id;
+  ad.Advertiser = event.params.Advertiser;
+  ad.URI = event.params.URI;
+  ad.Active = false;
+  ad.CreatedDate = new Date(event.block.timestamp.toI32() * 1000).toString();
+  ad.CurrentBudget = BigInt.fromI32(0);
+  ad.MaxBudget = BigInt.fromI32(0);
+  ad.PublishingRooms = new Array<BigInt>();
+  ad.TotalSpent = BigInt.fromI32(0);
+  ad.save();
 }
 
-export function handleApprovalForAll(event: ApprovalForAll): void {}
+export function handleRoomMinted(event: RoomMinted): void {
+  let room = new Room(event.params.Id.toString());
+  room.RoomId = event.params.Id;
+  room.Creator = event.params.Owner;
+  room.CreatedDate = new Date(event.block.timestamp.toI32() * 1000).toString();
+  room.URI = event.params.URI;
+  room.DisplayCharge = BigInt.fromI32(0);
+  room.IsListed = false;
+  room.Owner = event.params.Owner;
+  room.Price = BigInt.fromI32(0);
+  room.TotalEarning = BigInt.fromI32(0);
+  room.Videos = new Array<BigInt>();
+  room.save();
+}
 
-export function handleRoomMinted(event: RoomMinted): void {}
+export function handleTokenMinted(event: TokenMinted): void {
+  let token = new SocialTokenHolding(
+    event.params.creator.toString() + event.params.ID.toString()
+  );
+  token.Creator = event.params.creator;
+  token.SocialTokenId = event.params.ID;
+  token.AmountAvailbleforSale = BigInt.fromI32(0);
+  token.AmountListedByHolder = BigInt.fromI32(0);
+  token.AmountOwnedByHolder = event.params.amount;
+  token.Holder = event.params.creator;
+  token.IsLaunched = false;
+  token.LaunchingPrice = BigInt.fromI32(0);
+  token.MaxHoldingPerWallet = event.params.maxHoldingAmount;
+  token.PriceSetByHolder = BigInt.fromI32(0);
+  token.VideoId = event.params.videoIds;
+  token.URI = event.params.URI;
+  token.TotalAmountMinted = event.params.amount;
+  token.save();
+}
 
-export function handleTokenLaunched(event: TokenLaunched): void {}
-
-export function handleTokenListed(event: TokenListed): void {}
-
-export function handleTokenMinted(event: TokenMinted): void {}
-
-export function handleTokenSold(event: TokenSold): void {}
-
-export function handleTransferBatch(event: TransferBatch): void {}
-
-export function handleTransferSingle(event: TransferSingle): void {}
-
-export function handleURI(event: URI): void {}
-
-export function handleVideoMinted(event: VideoMinted): void {}
+export function handleVideoMinted(event: VideoMinted): void {
+  let video = new Video(event.params.Id.toString());
+  video.RoomId = null;
+  video.Creator = event.params.Owner;
+  video.CreatedDate = new Date(event.block.timestamp.toI32() * 1000).toString();
+  video.MetadataURI = event.params.URI;
+  video.Listed = false;
+  video.owner = event.params.Owner;
+  video.Price = BigInt.fromI32(0);
+  video.SocialTokenId = null;
+  video.OwnerPercentage = null;
+  video.HolderPercentage = null;
+  video.Beneficiaries = new Array<Bytes>();
+  video.Published = false;
+  video.AdsEnabled = false;
+  video.TotalEarnings = BigInt.fromI32(0);
+  video.LastPublishedDate = null;
+  video.save();
+}
