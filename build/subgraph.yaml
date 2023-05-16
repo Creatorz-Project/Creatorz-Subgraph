@@ -1,0 +1,127 @@
+specVersion: 0.0.5
+schema:
+  file: schema.graphql
+dataSources:
+  - kind: ethereum
+    name: Token
+    network: mumbai
+    source:
+      address: "0xC3990AbC1bc52Dd2751dE6696E1f88c4Eef0a7aF"
+      abi: Token
+      startBlock: 35547577
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.7
+      language: wasm/assemblyscript
+      entities:
+        - Video
+        - Room
+        - SocialTokenHolding
+        - Ad
+      abis:
+        - name: Token
+          file: Token\abis\Token.json
+      eventHandlers:
+        - event: AdCreated(uint256,string,address)
+          handler: handleAdCreated
+        - event: RoomMinted(uint256,string,address)
+          handler: handleRoomMinted
+        - event: TokenMinted(uint256,string,uint256,uint256,bool,address,uint256,uint256)
+          handler: handleTokenMinted
+        - event: VideoMinted(uint256,string,address)
+          handler: handleVideoMinted
+      file: Token\Token.wasm
+  - kind: ethereum
+    name: Contract
+    network: mumbai
+    source:
+      address: "0x76a3e6000bA8dc20CB16B29ed12157b9be6bFcB4"
+      abi: Contract
+      startBlock: 35548028
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.7
+      language: wasm/assemblyscript
+      entities:
+        - Video
+        - SocialTOkenHolding
+        - Room
+      abis:
+        - name: Contract
+          file: Contract\abis\Contract.json
+      eventHandlers:
+        - event: SocialTokenLaunched(uint256,address,uint256,uint256,uint256)
+          handler: handleSocialTokenLaunched
+        - event: VideoPublished(uint256,uint256,address,address,string)
+          handler: handleVideoPublished
+        - event: VideoUnpublished(uint256,uint256,address)
+          handler: handleVideoUnpublished
+      file: Contract\Contract.wasm
+  - kind: ethereum
+    name: MarketPlace
+    network: mumbai
+    source:
+      address: "0xaf9A875b0EA2aFaC1EaF25e99AF16788cb767201"
+      abi: MarketPlace
+      startBlock: 35548130
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.7
+      language: wasm/assemblyscript
+      entities:
+        - Room
+        - SocialTokenHolding
+        - Video
+      abis:
+        - name: MarketPlace
+          file: MarketPlace\abis\MarketPlace.json
+      eventHandlers:
+        - event: RoomListed(uint256,uint256)
+          handler: handleRoomListed
+        - event: RoomPurchased(uint256,address,address,uint256)
+          handler: handleRoomPurchased
+        - event: RoomUnlisted(uint256)
+          handler: handleRoomUnlisted
+        - event: SocialTokenListed(uint256,uint256,address,uint256)
+          handler: handleSocialTokenListed
+        - event: SocialTokenPurchased(uint256,address,address,uint256,uint256)
+          handler: handleSocialTokenPurchased
+        - event: SocialTokenUnlisted(uint256,uint256,address)
+          handler: handleSocialTokenUnlisted
+        - event: VideoListed(uint256,uint256)
+          handler: handleVideoListed
+        - event: VideoPurchased(uint256,address,address,uint256)
+          handler: handleVideoPurchased
+        - event: VideoUnlisted(uint256)
+          handler: handleVideoUnlisted
+      file: MarketPlace\MarketPlace.wasm
+  - kind: ethereum
+    name: AdManager
+    network: mumbai
+    source:
+      address: "0x77170e7F730b9670748F621BD6Fa9CC71D9fd057"
+      abi: AdManager
+      startBlock: 35548389
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.7
+      language: wasm/assemblyscript
+      entities:
+        - Ad
+        - Room
+        - Video
+      abis:
+        - name: AdManager
+          file: AdManager\abis\AdManager.json
+      eventHandlers:
+        - event: AdDisplayed(uint256,uint256,uint256)
+          handler: handleAdDisplayed
+        - event: CampaignStarted(uint256,uint256)
+          handler: handleCampaignStarted
+        - event: CampaignStopped(uint256,uint256)
+          handler: handleCampaignStopped
+        - event: PublisherRoomAdded(uint256,uint256)
+          handler: handlePublisherRoomAdded
+        - event: PublisherRoomRemoved(uint256,uint256)
+          handler: handlePublisherRoomRemoved
+      file: AdManager\AdManager.wasm

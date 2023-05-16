@@ -37,6 +37,15 @@ export function handleVideoPublished(event: VideoPublishedEvent): void {
     ).toString();
     video.RoomId = event.params.roomId;
     video.save();
+    let room = Room.load(event.params.roomId.toString());
+    if (!room) {
+      return;
+    } else {
+      let videos = room.Videos;
+      videos.push(event.params.videoId);
+      room.Videos = videos;
+      room.save();
+    }
   }
 }
 

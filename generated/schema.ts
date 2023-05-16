@@ -779,6 +779,19 @@ export class Ad extends Entity {
     this.set("CreatedDate", Value.fromString(value));
   }
 
+  get Views(): BigInt {
+    let value = this.get("Views");
+    if (!value || value.kind == ValueKind.NULL) {
+      throw new Error("Cannot return null for a required field.");
+    } else {
+      return value.toBigInt();
+    }
+  }
+
+  set Views(value: BigInt) {
+    this.set("Views", Value.fromBigInt(value));
+  }
+
   get CurrentBudget(): BigInt {
     let value = this.get("CurrentBudget");
     if (!value || value.kind == ValueKind.NULL) {

@@ -18,6 +18,7 @@ export function handleAdCreated(event: AdCreated): void {
   ad.MaxBudget = BigInt.fromI32(0);
   ad.PublishingRooms = new Array<BigInt>();
   ad.TotalSpent = BigInt.fromI32(0);
+  ad.Views = BigInt.fromI32(0);
   ad.save();
 }
 
