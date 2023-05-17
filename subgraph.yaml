@@ -6,9 +6,9 @@ dataSources:
     name: Token
     network: mumbai
     source:
-      address: "0xC3990AbC1bc52Dd2751dE6696E1f88c4Eef0a7aF"
+      address: "0x0f1995C01973947097a9fd1489822716b9C0B044"
       abi: Token
-      startBlock: 35547577
+      startBlock: 35672241
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.7
@@ -24,54 +24,54 @@ dataSources:
       eventHandlers:
         - event: AdCreated(uint256,string,address)
           handler: handleAdCreated
-        - event: RoomMinted(uint256,string,address)
+        - event: RoomMinted(uint256,string,address,uint256)
           handler: handleRoomMinted
         - event: TokenMinted(uint256,string,uint256,uint256,bool,address,uint256,uint256)
           handler: handleTokenMinted
-        - event: VideoMinted(uint256,string,address)
+        - event: VideoMinted(uint256,string,address,uint256)
           handler: handleVideoMinted
       file: ./src/token.ts
   - kind: ethereum
-    name: Contract
+    name: ContentManger
     network: mumbai
     source:
-      address: "0x76a3e6000bA8dc20CB16B29ed12157b9be6bFcB4"
-      abi: Contract
-      startBlock: 35548028
+      address: "0x95Ce14D13a66dF7222A752841fb3F88f8b4d7868"
+      abi: ContentManger
+      startBlock: 35672491
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.7
       language: wasm/assemblyscript
       entities:
         - Video
-        - SocialTOkenHolding
+        - SocialTokenHolding
         - Room
       abis:
-        - name: Contract
-          file: ./abis/Contract.json
+        - name: ContentManger
+          file: ./abis/ContentManger.json
       eventHandlers:
         - event: SocialTokenLaunched(uint256,address,uint256,uint256,uint256)
           handler: handleSocialTokenLaunched
-        - event: VideoPublished(uint256,uint256,address,address,string)
+        - event: VideoPublished(uint256,uint256,address,address,string,bool)
           handler: handleVideoPublished
         - event: VideoUnpublished(uint256,uint256,address)
           handler: handleVideoUnpublished
-      file: ./src/contract.ts
+      file: ./src/content-manger.ts
   - kind: ethereum
     name: MarketPlace
     network: mumbai
     source:
-      address: "0xaf9A875b0EA2aFaC1EaF25e99AF16788cb767201"
+      address: "0xaAe0d67770F2bCB853fD406214D982322b09BdFf"
       abi: MarketPlace
-      startBlock: 35548130
+      startBlock: 35672578
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.7
       language: wasm/assemblyscript
       entities:
-        - Room
-        - SocialTokenHolding
         - Video
+        - SocialTokenHolding
+        - Room
       abis:
         - name: MarketPlace
           file: ./abis/MarketPlace.json
@@ -90,7 +90,7 @@ dataSources:
           handler: handleSocialTokenUnlisted
         - event: VideoListed(uint256,uint256)
           handler: handleVideoListed
-        - event: VideoPurchased(uint256,address,address,uint256)
+        - event: VideoPurchased(uint256,address,address,uint256,uint256)
           handler: handleVideoPurchased
         - event: VideoUnlisted(uint256)
           handler: handleVideoUnlisted
@@ -99,9 +99,9 @@ dataSources:
     name: AdManager
     network: mumbai
     source:
-      address: "0x77170e7F730b9670748F621BD6Fa9CC71D9fd057"
+      address: "0xa2F301212Cea1BdEae5FD2A27458b13ff50379cE"
       abi: AdManager
-      startBlock: 35548389
+      startBlock: 35672616
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.7

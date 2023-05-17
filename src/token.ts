@@ -59,7 +59,7 @@ export function handleTokenMinted(event: TokenMinted): void {
 
 export function handleVideoMinted(event: VideoMinted): void {
   let video = new Video(event.params.Id.toString());
-  video.RoomId = null;
+  video.RoomId = event.params.roomId;
   video.Creator = event.params.Owner;
   video.CreatedDate = new Date(event.block.timestamp.toI32() * 1000).toString();
   video.MetadataURI = event.params.URI;
@@ -75,4 +75,11 @@ export function handleVideoMinted(event: VideoMinted): void {
   video.TotalEarnings = BigInt.fromI32(0);
   video.LastPublishedDate = null;
   video.save();
+  let room = Room.load(event.params.roomId.toString());
+  if (room != null) {
+    let videos = room.Videos;
+    videos.push(event.params.Id);
+    room.Videos = videos;
+    room.save();
+  }
 }

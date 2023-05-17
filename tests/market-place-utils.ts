@@ -176,7 +176,8 @@ export function createVideoPurchasedEvent(
   _id: BigInt,
   _buyer: Address,
   _seller: Address,
-  _price: BigInt
+  _price: BigInt,
+  _roomId: BigInt
 ): VideoPurchased {
   let videoPurchasedEvent = changetype<VideoPurchased>(newMockEvent())
 
@@ -193,6 +194,12 @@ export function createVideoPurchasedEvent(
   )
   videoPurchasedEvent.parameters.push(
     new ethereum.EventParam("_price", ethereum.Value.fromUnsignedBigInt(_price))
+  )
+  videoPurchasedEvent.parameters.push(
+    new ethereum.EventParam(
+      "_roomId",
+      ethereum.Value.fromUnsignedBigInt(_roomId)
+    )
   )
 
   return videoPurchasedEvent

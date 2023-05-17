@@ -7,8 +7,8 @@ import {
   afterAll
 } from "matchstick-as/assembly/index"
 import { BigInt, Address } from "@graphprotocol/graph-ts"
-import { ExampleEntity } from "../generated/schema"
-import { AdCreated } from "../generated/Token/Token"
+import { AdCreated } from "../generated/schema"
+import { AdCreated as AdCreatedEvent } from "../generated/Token/Token"
 import { handleAdCreated } from "../src/token"
 import { createAdCreatedEvent } from "./token-utils"
 
@@ -33,25 +33,25 @@ describe("Describe entity assertions", () => {
   // For more test scenarios, see:
   // https://thegraph.com/docs/en/developer/matchstick/#write-a-unit-test
 
-  test("ExampleEntity created and stored", () => {
-    assert.entityCount("ExampleEntity", 1)
+  test("AdCreated created and stored", () => {
+    assert.entityCount("AdCreated", 1)
 
     // 0xa16081f360e3847006db660bae1c6d1b2e17ec2a is the default address used in newMockEvent() function
     assert.fieldEquals(
-      "ExampleEntity",
-      "0xa16081f360e3847006db660bae1c6d1b2e17ec2a",
+      "AdCreated",
+      "0xa16081f360e3847006db660bae1c6d1b2e17ec2a-1",
       "Id",
       "234"
     )
     assert.fieldEquals(
-      "ExampleEntity",
-      "0xa16081f360e3847006db660bae1c6d1b2e17ec2a",
+      "AdCreated",
+      "0xa16081f360e3847006db660bae1c6d1b2e17ec2a-1",
       "URI",
       "Example string value"
     )
     assert.fieldEquals(
-      "ExampleEntity",
-      "0xa16081f360e3847006db660bae1c6d1b2e17ec2a",
+      "AdCreated",
+      "0xa16081f360e3847006db660bae1c6d1b2e17ec2a-1",
       "Advertiser",
       "0x0000000000000000000000000000000000000001"
     )

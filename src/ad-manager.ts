@@ -16,9 +16,22 @@ export function handleAdDisplayed(event: AdDisplayedEvent): void {
   } else {
     ad.Views = ad.Views.plus(BigInt.fromI32(1));
     ad.TotalSpent = ad.TotalSpent.plus(event.params.Reward);
+    ad.CurrentBudget = ad.CurrentBudget.minus(event.params.Reward);
     ad.save();
     video.TotalEarnings = video.TotalEarnings.plus(event.params.Reward);
     video.save();
+  }
+  let room = video.RoomId;
+  if (!room) {
+    return;
+  } else {
+    let r = Room.load(room.toString());
+    if (!r) {
+      return;
+    } else {
+      r.TotalEarning = r.TotalEarning.plus(event.params.Reward);
+      r.save();
+    }
   }
 }
 export function handleCampaignStarted(event: CampaignStartedEvent): void {
@@ -27,6 +40,8 @@ export function handleCampaignStarted(event: CampaignStartedEvent): void {
     return;
   } else {
     ad.Active = true;
+    ad.MaxBudget = event.params.MaxBudget;
+    ad.CurrentBudget = event.params.MaxBudget;
     ad.save();
   }
 }
@@ -37,6 +52,8 @@ export function handleCampaignStopped(event: CampaignStoppedEvent): void {
     return;
   } else {
     ad.Active = false;
+    ad.CurrentBudget = BigInt.fromI32(0);
+    ad.MaxBudget = BigInt.fromI32(0);
     ad.save();
   }
 }
@@ -46,9 +63,10 @@ export function handlePublisherRoomAdded(event: PublisherRoomAddedEvent): void {
   if (!ad) {
     return;
   } else {
-    let PublishingRooms = ad.PublishingRooms;
-    PublishingRooms.push(event.params.RoomId);
-    ad.PublishingRooms = PublishingRooms;
+    let rooms = ad.PublishingRooms;
+    rooms.push(event.params.RoomId);
+    ad.PublishingRooms = rooms;
+    ad.Views = event.params.RoomId;
     ad.save();
   }
 }

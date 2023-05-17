@@ -86,49 +86,9 @@ export class RoomMinted__Params {
   get Owner(): Address {
     return this._event.parameters[2].value.toAddress();
   }
-}
 
-export class TokenLaunched extends ethereum.Event {
-  get params(): TokenLaunched__Params {
-    return new TokenLaunched__Params(this);
-  }
-}
-
-export class TokenLaunched__Params {
-  _event: TokenLaunched;
-
-  constructor(event: TokenLaunched) {
-    this._event = event;
-  }
-
-  get Id(): BigInt {
-    return this._event.parameters[0].value.toBigInt();
-  }
-}
-
-export class TokenListed extends ethereum.Event {
-  get params(): TokenListed__Params {
-    return new TokenListed__Params(this);
-  }
-}
-
-export class TokenListed__Params {
-  _event: TokenListed;
-
-  constructor(event: TokenListed) {
-    this._event = event;
-  }
-
-  get Id(): BigInt {
-    return this._event.parameters[0].value.toBigInt();
-  }
-
-  get price(): BigInt {
-    return this._event.parameters[1].value.toBigInt();
-  }
-
-  get amount(): BigInt {
-    return this._event.parameters[2].value.toBigInt();
+  get displayCharge(): BigInt {
+    return this._event.parameters[3].value.toBigInt();
   }
 }
 
@@ -175,36 +135,6 @@ export class TokenMinted__Params {
 
   get videoIds(): BigInt {
     return this._event.parameters[7].value.toBigInt();
-  }
-}
-
-export class TokenSold extends ethereum.Event {
-  get params(): TokenSold__Params {
-    return new TokenSold__Params(this);
-  }
-}
-
-export class TokenSold__Params {
-  _event: TokenSold;
-
-  constructor(event: TokenSold) {
-    this._event = event;
-  }
-
-  get Id(): BigInt {
-    return this._event.parameters[0].value.toBigInt();
-  }
-
-  get amount(): BigInt {
-    return this._event.parameters[1].value.toBigInt();
-  }
-
-  get seller(): Address {
-    return this._event.parameters[2].value.toAddress();
-  }
-
-  get buyer(): Address {
-    return this._event.parameters[3].value.toAddress();
   }
 }
 
@@ -321,6 +251,10 @@ export class VideoMinted__Params {
 
   get Owner(): Address {
     return this._event.parameters[2].value.toAddress();
+  }
+
+  get roomId(): BigInt {
+    return this._event.parameters[3].value.toBigInt();
   }
 }
 

@@ -211,6 +211,12 @@
         "internalType": "uint256",
         "name": "_price",
         "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "_roomId",
+        "type": "uint256"
       }
     ],
     "name": "VideoPurchased",
@@ -385,11 +391,6 @@
             "internalType": "bool",
             "name": "launched",
             "type": "bool"
-          },
-          {
-            "internalType": "uint256",
-            "name": "revenueSplit",
-            "type": "uint256"
           },
           {
             "internalType": "address",

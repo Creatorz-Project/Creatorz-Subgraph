@@ -4,10 +4,7 @@ import {
   AdCreated,
   ApprovalForAll,
   RoomMinted,
-  TokenLaunched,
-  TokenListed,
   TokenMinted,
-  TokenSold,
   TransferBatch,
   TransferSingle,
   URI,
@@ -64,7 +61,8 @@ export function createApprovalForAllEvent(
 export function createRoomMintedEvent(
   Id: BigInt,
   URI: string,
-  Owner: Address
+  Owner: Address,
+  displayCharge: BigInt
 ): RoomMinted {
   let roomMintedEvent = changetype<RoomMinted>(newMockEvent())
 
@@ -79,42 +77,14 @@ export function createRoomMintedEvent(
   roomMintedEvent.parameters.push(
     new ethereum.EventParam("Owner", ethereum.Value.fromAddress(Owner))
   )
+  roomMintedEvent.parameters.push(
+    new ethereum.EventParam(
+      "displayCharge",
+      ethereum.Value.fromUnsignedBigInt(displayCharge)
+    )
+  )
 
   return roomMintedEvent
-}
-
-export function createTokenLaunchedEvent(Id: BigInt): TokenLaunched {
-  let tokenLaunchedEvent = changetype<TokenLaunched>(newMockEvent())
-
-  tokenLaunchedEvent.parameters = new Array()
-
-  tokenLaunchedEvent.parameters.push(
-    new ethereum.EventParam("Id", ethereum.Value.fromUnsignedBigInt(Id))
-  )
-
-  return tokenLaunchedEvent
-}
-
-export function createTokenListedEvent(
-  Id: BigInt,
-  price: BigInt,
-  amount: BigInt
-): TokenListed {
-  let tokenListedEvent = changetype<TokenListed>(newMockEvent())
-
-  tokenListedEvent.parameters = new Array()
-
-  tokenListedEvent.parameters.push(
-    new ethereum.EventParam("Id", ethereum.Value.fromUnsignedBigInt(Id))
-  )
-  tokenListedEvent.parameters.push(
-    new ethereum.EventParam("price", ethereum.Value.fromUnsignedBigInt(price))
-  )
-  tokenListedEvent.parameters.push(
-    new ethereum.EventParam("amount", ethereum.Value.fromUnsignedBigInt(amount))
-  )
-
-  return tokenListedEvent
 }
 
 export function createTokenMintedEvent(
@@ -163,32 +133,6 @@ export function createTokenMintedEvent(
   )
 
   return tokenMintedEvent
-}
-
-export function createTokenSoldEvent(
-  Id: BigInt,
-  amount: BigInt,
-  seller: Address,
-  buyer: Address
-): TokenSold {
-  let tokenSoldEvent = changetype<TokenSold>(newMockEvent())
-
-  tokenSoldEvent.parameters = new Array()
-
-  tokenSoldEvent.parameters.push(
-    new ethereum.EventParam("Id", ethereum.Value.fromUnsignedBigInt(Id))
-  )
-  tokenSoldEvent.parameters.push(
-    new ethereum.EventParam("amount", ethereum.Value.fromUnsignedBigInt(amount))
-  )
-  tokenSoldEvent.parameters.push(
-    new ethereum.EventParam("seller", ethereum.Value.fromAddress(seller))
-  )
-  tokenSoldEvent.parameters.push(
-    new ethereum.EventParam("buyer", ethereum.Value.fromAddress(buyer))
-  )
-
-  return tokenSoldEvent
 }
 
 export function createTransferBatchEvent(
@@ -272,7 +216,8 @@ export function createURIEvent(value: string, id: BigInt): URI {
 export function createVideoMintedEvent(
   Id: BigInt,
   URI: string,
-  Owner: Address
+  Owner: Address,
+  roomId: BigInt
 ): VideoMinted {
   let videoMintedEvent = changetype<VideoMinted>(newMockEvent())
 
@@ -286,6 +231,9 @@ export function createVideoMintedEvent(
   )
   videoMintedEvent.parameters.push(
     new ethereum.EventParam("Owner", ethereum.Value.fromAddress(Owner))
+  )
+  videoMintedEvent.parameters.push(
+    new ethereum.EventParam("roomId", ethereum.Value.fromUnsignedBigInt(roomId))
   )
 
   return videoMintedEvent

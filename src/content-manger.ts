@@ -2,16 +2,15 @@ import {
   SocialTokenLaunched as SocialTokenLaunchedEvent,
   VideoPublished as VideoPublishedEvent,
   VideoUnpublished as VideoUnpublishedEvent,
-} from "../generated/Contract/Contract";
-import { Video, SocialTokenHolding, Room } from "../generated/schema";
+} from "../generated/ContentManger/ContentManger";
+import { Video, SocialTokenHolding } from "../generated/schema";
 
 export function handleSocialTokenLaunched(
   event: SocialTokenLaunchedEvent
 ): void {
   let socialtoken = SocialTokenHolding.load(
-    event.params.creator.toString() + event.params.tokenId.toHexString()
+    event.params.creator.toString() + event.params.tokenId.toString()
   );
-
   if (!socialtoken) {
     return;
   } else {
@@ -36,16 +35,8 @@ export function handleVideoPublished(event: VideoPublishedEvent): void {
       event.block.timestamp.toI32() * 1000
     ).toString();
     video.RoomId = event.params.roomId;
+    video.AdsEnabled = event.params.adsEnabled;
     video.save();
-    let room = Room.load(event.params.roomId.toString());
-    if (!room) {
-      return;
-    } else {
-      let videos = room.Videos;
-      videos.push(event.params.videoId);
-      room.Videos = videos;
-      room.save();
-    }
   }
 }
 

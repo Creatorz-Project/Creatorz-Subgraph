@@ -220,6 +220,10 @@ export class VideoPurchased__Params {
   get _price(): BigInt {
     return this._event.parameters[3].value.toBigInt();
   }
+
+  get _roomId(): BigInt {
+    return this._event.parameters[4].value.toBigInt();
+  }
 }
 
 export class VideoUnlisted extends ethereum.Event {
@@ -299,20 +303,16 @@ export class MarketPlace__getSocialTokenResultValue0Struct extends ethereum.Tupl
     return this[5].toBoolean();
   }
 
-  get revenueSplit(): BigInt {
-    return this[6].toBigInt();
-  }
-
   get creator(): Address {
-    return this[7].toAddress();
+    return this[6].toAddress();
   }
 
   get maxHoldingAmount(): BigInt {
-    return this[8].toBigInt();
+    return this[7].toBigInt();
   }
 
   get videoIds(): BigInt {
-    return this[9].toBigInt();
+    return this[8].toBigInt();
   }
 }
 
@@ -407,7 +407,7 @@ export class MarketPlace extends ethereum.SmartContract {
   getSocialToken(_id: BigInt): MarketPlace__getSocialTokenResultValue0Struct {
     let result = super.call(
       "getSocialToken",
-      "getSocialToken(uint256):((uint256,string,uint256,uint256,uint256,bool,uint256,address,uint256,uint256))",
+      "getSocialToken(uint256):((uint256,string,uint256,uint256,uint256,bool,address,uint256,uint256))",
       [ethereum.Value.fromUnsignedBigInt(_id)]
     );
 
@@ -421,7 +421,7 @@ export class MarketPlace extends ethereum.SmartContract {
   ): ethereum.CallResult<MarketPlace__getSocialTokenResultValue0Struct> {
     let result = super.tryCall(
       "getSocialToken",
-      "getSocialToken(uint256):((uint256,string,uint256,uint256,uint256,bool,uint256,address,uint256,uint256))",
+      "getSocialToken(uint256):((uint256,string,uint256,uint256,uint256,bool,address,uint256,uint256))",
       [ethereum.Value.fromUnsignedBigInt(_id)]
     );
     if (result.reverted) {

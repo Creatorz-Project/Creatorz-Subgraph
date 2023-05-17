@@ -192,6 +192,7 @@ export function handleVideoPurchased(event: VideoPurchasedEvent): void {
     video.Listed = false;
     video.Published = true;
     video.owner = event.params._buyer;
+    video.RoomId = event.params._roomId;
     video.save();
   }
 }

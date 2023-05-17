@@ -76,6 +76,10 @@ export class VideoPublished__Params {
   get URI(): string {
     return this._event.parameters[4].value.toString();
   }
+
+  get adsEnabled(): boolean {
+    return this._event.parameters[5].value.toBoolean();
+  }
 }
 
 export class VideoUnpublished extends ethereum.Event {
@@ -104,9 +108,9 @@ export class VideoUnpublished__Params {
   }
 }
 
-export class Contract extends ethereum.SmartContract {
-  static bind(address: Address): Contract {
-    return new Contract("Contract", address);
+export class ContentManger extends ethereum.SmartContract {
+  static bind(address: Address): ContentManger {
+    return new ContentManger("ContentManger", address);
   }
 }
 
