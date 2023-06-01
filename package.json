@@ -8,7 +8,8 @@
     "create-local": "graph create --node http://localhost:8020/ karthikeyagundumogula/creatorzv1",
     "remove-local": "graph remove --node http://localhost:8020/ karthikeyagundumogula/creatorzv1",
     "deploy-local": "graph deploy --node http://localhost:8020/ --ipfs http://localhost:5001 karthikeyagundumogula/creatorzv1",
-    "test": "graph test"
+    "test": "graph test",
+    "auth": "graph auth --product hosted-service 064a14ceb6e5f154735fc49e20a51507"
   },
   "dependencies": {
     "@graphprotocol/graph-cli": "0.49.0",

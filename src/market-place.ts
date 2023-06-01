@@ -25,17 +25,15 @@ export function handleRoomListed(event: RoomListedEvent): void {
 
 export function handleRoomPurchased(event: RoomPurchasedEvent): void {
   let room = Room.load(event.params._id.toString());
-  if (!room) {
-    return;
-  } else {
-    room.IsListed = false;
+  if (room != null) {
     room.Owner = event.params._buyer;
     room.IsListed = false;
     room.Price = event.params._price;
+    room.save();
     for (let i = 0; i < room.Videos.length; i++) {
       let video = Video.load(room.Videos[i].toString());
       if (!video) {
-        continue;
+        return;
       } else {
         video.Listed = false;
         video.Published = false;
@@ -43,10 +41,11 @@ export function handleRoomPurchased(event: RoomPurchasedEvent): void {
         video.owner = event.params._buyer;
         video.save();
       }
-      room.save();
+  }} else {
+    return  ;
     }
   }
-}
+
 
 export function handleRoomUnlisted(event: RoomUnlistedEvent): void {
   let room = Room.load(event.params._id.toString());

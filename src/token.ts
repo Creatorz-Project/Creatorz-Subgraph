@@ -13,7 +13,8 @@ export function handleAdCreated(event: AdCreated): void {
   ad.Advertiser = event.params.Advertiser;
   ad.URI = event.params.URI;
   ad.Active = false;
-  ad.CreatedDate = new Date(event.block.timestamp.toI32() * 1000).toString();
+  let data = event.block.timestamp.toI32() * 10000000
+  ad.CreatedDate = new Date(data).toString();
   ad.CurrentBudget = BigInt.fromI32(0);
   ad.MaxBudget = BigInt.fromI32(0);
   ad.PublishingRooms = new Array<BigInt>();
