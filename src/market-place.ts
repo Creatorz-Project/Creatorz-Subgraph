@@ -20,6 +20,15 @@ export function handleRoomListed(event: RoomListedEvent): void {
     room.IsListed = true;
     room.Price = event.params._price;
     room.save();
+    for (let i = 0; i < room.Videos.length; i++) {
+      let video = Video.load(room.Videos[i].toString());
+      if (!video) {
+        return;
+      } else {
+        video.Listed = true;
+        video.save();
+      }
+  }
   }
 }
 
@@ -41,7 +50,8 @@ export function handleRoomPurchased(event: RoomPurchasedEvent): void {
         video.owner = event.params._buyer;
         video.save();
       }
-  }} else {
+  }
+} else {
     return  ;
     }
   }
