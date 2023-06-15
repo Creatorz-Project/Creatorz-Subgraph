@@ -273,8 +273,12 @@ export class MarketPlace__getRoomResultValue0Struct extends ethereum.Tuple {
     return this[6].toBigIntArray();
   }
 
+  get AdIds(): Array<BigInt> {
+    return this[7].toBigIntArray();
+  }
+
   get Listed(): boolean {
-    return this[7].toBoolean();
+    return this[8].toBoolean();
   }
 }
 
@@ -378,7 +382,7 @@ export class MarketPlace extends ethereum.SmartContract {
   getRoom(_id: BigInt): MarketPlace__getRoomResultValue0Struct {
     let result = super.call(
       "getRoom",
-      "getRoom(uint256):((uint256,string,address,address,uint256,uint256,uint256[],bool))",
+      "getRoom(uint256):((uint256,string,address,address,uint256,uint256,uint256[],uint256[],bool))",
       [ethereum.Value.fromUnsignedBigInt(_id)]
     );
 
@@ -392,7 +396,7 @@ export class MarketPlace extends ethereum.SmartContract {
   ): ethereum.CallResult<MarketPlace__getRoomResultValue0Struct> {
     let result = super.tryCall(
       "getRoom",
-      "getRoom(uint256):((uint256,string,address,address,uint256,uint256,uint256[],bool))",
+      "getRoom(uint256):((uint256,string,address,address,uint256,uint256,uint256[],uint256[],bool))",
       [ethereum.Value.fromUnsignedBigInt(_id)]
     );
     if (result.reverted) {

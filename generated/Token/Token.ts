@@ -321,8 +321,12 @@ export class Token__getRoomResultValue0Struct extends ethereum.Tuple {
     return this[6].toBigIntArray();
   }
 
+  get AdIds(): Array<BigInt> {
+    return this[7].toBigIntArray();
+  }
+
   get Listed(): boolean {
-    return this[7].toBoolean();
+    return this[8].toBoolean();
   }
 }
 
@@ -559,7 +563,7 @@ export class Token extends ethereum.SmartContract {
   getRoom(_id: BigInt): Token__getRoomResultValue0Struct {
     let result = super.call(
       "getRoom",
-      "getRoom(uint256):((uint256,string,address,address,uint256,uint256,uint256[],bool))",
+      "getRoom(uint256):((uint256,string,address,address,uint256,uint256,uint256[],uint256[],bool))",
       [ethereum.Value.fromUnsignedBigInt(_id)]
     );
 
@@ -571,7 +575,7 @@ export class Token extends ethereum.SmartContract {
   ): ethereum.CallResult<Token__getRoomResultValue0Struct> {
     let result = super.tryCall(
       "getRoom",
-      "getRoom(uint256):((uint256,string,address,address,uint256,uint256,uint256[],bool))",
+      "getRoom(uint256):((uint256,string,address,address,uint256,uint256,uint256[],uint256[],bool))",
       [ethereum.Value.fromUnsignedBigInt(_id)]
     );
     if (result.reverted) {
@@ -1256,8 +1260,16 @@ export class UpdateRoomParametersCall__Inputs {
     return this._call.inputValues[5].value.toBigInt();
   }
 
+  get _adId(): BigInt {
+    return this._call.inputValues[6].value.toBigInt();
+  }
+
+  get _adAction(): BigInt {
+    return this._call.inputValues[7].value.toBigInt();
+  }
+
   get _listed(): boolean {
-    return this._call.inputValues[6].value.toBoolean();
+    return this._call.inputValues[8].value.toBoolean();
   }
 }
 

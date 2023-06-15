@@ -6,9 +6,9 @@ dataSources:
     name: Token
     network: mumbai
     source:
-      address: "0x7e302e1919f825F2C7376845E8796530F81B31f2"
+      address: "0xf8Eb93b1c313940Aa79f912971E002b988D1ce02"
       abi: Token
-      startBlock: 36343530
+      startBlock: 36601592
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.7
@@ -35,9 +35,9 @@ dataSources:
     name: ContentManger
     network: mumbai
     source:
-      address: "0x3c6B102851AeEb346435DC9D005978766126b3c2"
+      address: "0x3C0bc6d811C7aE0deE04C70df39405669B77A1cd"
       abi: ContentManger
-      startBlock: 36343702
+      startBlock: 	36601645
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.7
@@ -61,9 +61,9 @@ dataSources:
     name: MarketPlace
     network: mumbai
     source:
-      address: "0x3711E4cC2030b96a316260A947fE5cfc18D2D020"
+      address: "0xB822B8Ca7F326DcF258F466C35357fFE3aB82bAF"
       abi: MarketPlace
-      startBlock: 36343754
+      startBlock: 36601845
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.7
@@ -99,9 +99,9 @@ dataSources:
     name: AdManager
     network: mumbai
     source:
-      address: "0x992560c47cb37aDC384BFb3293bC97501a2a97B5"
+      address: "0x95bB54d2101b01E36048da347C13549eD09Fd74b"
       abi: AdManager
-      startBlock: 36343643
+      startBlock: 36601684
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.7

@@ -337,6 +337,11 @@
             "type": "uint256[]"
           },
           {
+            "internalType": "uint256[]",
+            "name": "AdIds",
+            "type": "uint256[]"
+          },
+          {
             "internalType": "bool",
             "name": "Listed",
             "type": "bool"

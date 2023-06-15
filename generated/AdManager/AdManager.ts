@@ -124,6 +124,58 @@ export class PublisherRoomRemoved__Params {
   }
 }
 
+export class AdManager__adStatusesResult {
+  value0: BigInt;
+  value1: BigInt;
+  value2: BigInt;
+  value3: BigInt;
+  value4: boolean;
+
+  constructor(
+    value0: BigInt,
+    value1: BigInt,
+    value2: BigInt,
+    value3: BigInt,
+    value4: boolean
+  ) {
+    this.value0 = value0;
+    this.value1 = value1;
+    this.value2 = value2;
+    this.value3 = value3;
+    this.value4 = value4;
+  }
+
+  toMap(): TypedMap<string, ethereum.Value> {
+    let map = new TypedMap<string, ethereum.Value>();
+    map.set("value0", ethereum.Value.fromUnsignedBigInt(this.value0));
+    map.set("value1", ethereum.Value.fromUnsignedBigInt(this.value1));
+    map.set("value2", ethereum.Value.fromUnsignedBigInt(this.value2));
+    map.set("value3", ethereum.Value.fromUnsignedBigInt(this.value3));
+    map.set("value4", ethereum.Value.fromBoolean(this.value4));
+    return map;
+  }
+
+  getReqId(): BigInt {
+    return this.value0;
+  }
+
+  getAdId(): BigInt {
+    return this.value1;
+  }
+
+  getVideoId(): BigInt {
+    return this.value2;
+  }
+
+  getRoomId(): BigInt {
+    return this.value3;
+  }
+
+  getRandomFilled(): boolean {
+    return this.value4;
+  }
+}
+
 export class AdManager__getAdResultValue0Struct extends ethereum.Tuple {
   get Id(): BigInt {
     return this[0].toBigInt();
@@ -155,6 +207,44 @@ export class AdManager__getAdResultValue0Struct extends ethereum.Tuple {
 
   get MaxBudget(): BigInt {
     return this[7].toBigInt();
+  }
+}
+
+export class AdManager__getRoomResultValue0Struct extends ethereum.Tuple {
+  get Id(): BigInt {
+    return this[0].toBigInt();
+  }
+
+  get URI(): string {
+    return this[1].toString();
+  }
+
+  get Creator(): Address {
+    return this[2].toAddress();
+  }
+
+  get Owner(): Address {
+    return this[3].toAddress();
+  }
+
+  get Price(): BigInt {
+    return this[4].toBigInt();
+  }
+
+  get DisplayReward(): BigInt {
+    return this[5].toBigInt();
+  }
+
+  get VideoIds(): Array<BigInt> {
+    return this[6].toBigIntArray();
+  }
+
+  get AdIds(): Array<BigInt> {
+    return this[7].toBigIntArray();
+  }
+
+  get Listed(): boolean {
+    return this[8].toBoolean();
   }
 }
 
@@ -217,6 +307,45 @@ export class AdManager extends ethereum.SmartContract {
     return new AdManager("AdManager", address);
   }
 
+  adStatuses(param0: BigInt): AdManager__adStatusesResult {
+    let result = super.call(
+      "adStatuses",
+      "adStatuses(uint256):(uint256,uint256,uint256,uint256,bool)",
+      [ethereum.Value.fromUnsignedBigInt(param0)]
+    );
+
+    return new AdManager__adStatusesResult(
+      result[0].toBigInt(),
+      result[1].toBigInt(),
+      result[2].toBigInt(),
+      result[3].toBigInt(),
+      result[4].toBoolean()
+    );
+  }
+
+  try_adStatuses(
+    param0: BigInt
+  ): ethereum.CallResult<AdManager__adStatusesResult> {
+    let result = super.tryCall(
+      "adStatuses",
+      "adStatuses(uint256):(uint256,uint256,uint256,uint256,bool)",
+      [ethereum.Value.fromUnsignedBigInt(param0)]
+    );
+    if (result.reverted) {
+      return new ethereum.CallResult();
+    }
+    let value = result.value;
+    return ethereum.CallResult.fromValue(
+      new AdManager__adStatusesResult(
+        value[0].toBigInt(),
+        value[1].toBigInt(),
+        value[2].toBigInt(),
+        value[3].toBigInt(),
+        value[4].toBoolean()
+      )
+    );
+  }
+
   getAd(_adId: BigInt): AdManager__getAdResultValue0Struct {
     let result = super.call(
       "getAd",
@@ -241,6 +370,35 @@ export class AdManager extends ethereum.SmartContract {
     let value = result.value;
     return ethereum.CallResult.fromValue(
       changetype<AdManager__getAdResultValue0Struct>(value[0].toTuple())
+    );
+  }
+
+  getRoom(_roomId: BigInt): AdManager__getRoomResultValue0Struct {
+    let result = super.call(
+      "getRoom",
+      "getRoom(uint256):((uint256,string,address,address,uint256,uint256,uint256[],uint256[],bool))",
+      [ethereum.Value.fromUnsignedBigInt(_roomId)]
+    );
+
+    return changetype<AdManager__getRoomResultValue0Struct>(
+      result[0].toTuple()
+    );
+  }
+
+  try_getRoom(
+    _roomId: BigInt
+  ): ethereum.CallResult<AdManager__getRoomResultValue0Struct> {
+    let result = super.tryCall(
+      "getRoom",
+      "getRoom(uint256):((uint256,string,address,address,uint256,uint256,uint256[],uint256[],bool))",
+      [ethereum.Value.fromUnsignedBigInt(_roomId)]
+    );
+    if (result.reverted) {
+      return new ethereum.CallResult();
+    }
+    let value = result.value;
+    return ethereum.CallResult.fromValue(
+      changetype<AdManager__getRoomResultValue0Struct>(value[0].toTuple())
     );
   }
 
@@ -589,6 +747,40 @@ export class OnERC1155ReceivedCall__Outputs {
   }
 }
 
+export class RawFulfillRandomWordsCall extends ethereum.Call {
+  get inputs(): RawFulfillRandomWordsCall__Inputs {
+    return new RawFulfillRandomWordsCall__Inputs(this);
+  }
+
+  get outputs(): RawFulfillRandomWordsCall__Outputs {
+    return new RawFulfillRandomWordsCall__Outputs(this);
+  }
+}
+
+export class RawFulfillRandomWordsCall__Inputs {
+  _call: RawFulfillRandomWordsCall;
+
+  constructor(call: RawFulfillRandomWordsCall) {
+    this._call = call;
+  }
+
+  get _requestId(): BigInt {
+    return this._call.inputValues[0].value.toBigInt();
+  }
+
+  get _randomWords(): Array<BigInt> {
+    return this._call.inputValues[1].value.toBigIntArray();
+  }
+}
+
+export class RawFulfillRandomWordsCall__Outputs {
+  _call: RawFulfillRandomWordsCall;
+
+  constructor(call: RawFulfillRandomWordsCall) {
+    this._call = call;
+  }
+}
+
 export class RemovePublishingRoomCall extends ethereum.Call {
   get inputs(): RemovePublishingRoomCall__Inputs {
     return new RemovePublishingRoomCall__Inputs(this);
@@ -619,6 +811,36 @@ export class RemovePublishingRoomCall__Outputs {
   _call: RemovePublishingRoomCall;
 
   constructor(call: RemovePublishingRoomCall) {
+    this._call = call;
+  }
+}
+
+export class ServeAdCall extends ethereum.Call {
+  get inputs(): ServeAdCall__Inputs {
+    return new ServeAdCall__Inputs(this);
+  }
+
+  get outputs(): ServeAdCall__Outputs {
+    return new ServeAdCall__Outputs(this);
+  }
+}
+
+export class ServeAdCall__Inputs {
+  _call: ServeAdCall;
+
+  constructor(call: ServeAdCall) {
+    this._call = call;
+  }
+
+  get _videoId(): BigInt {
+    return this._call.inputValues[0].value.toBigInt();
+  }
+}
+
+export class ServeAdCall__Outputs {
+  _call: ServeAdCall;
+
+  constructor(call: ServeAdCall) {
     this._call = call;
   }
 }

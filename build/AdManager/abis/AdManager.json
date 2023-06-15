@@ -115,6 +115,45 @@
     "inputs": [
       {
         "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "name": "adStatuses",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "reqId",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "adId",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "videoId",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "roomId",
+        "type": "uint256"
+      },
+      {
+        "internalType": "bool",
+        "name": "randomFilled",
+        "type": "bool"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
         "name": "_AdId",
         "type": "uint256"
       },
@@ -201,6 +240,72 @@
           }
         ],
         "internalType": "struct ITokens.Ad",
+        "name": "",
+        "type": "tuple"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "_roomId",
+        "type": "uint256"
+      }
+    ],
+    "name": "getRoom",
+    "outputs": [
+      {
+        "components": [
+          {
+            "internalType": "uint256",
+            "name": "Id",
+            "type": "uint256"
+          },
+          {
+            "internalType": "string",
+            "name": "URI",
+            "type": "string"
+          },
+          {
+            "internalType": "address",
+            "name": "Creator",
+            "type": "address"
+          },
+          {
+            "internalType": "address",
+            "name": "Owner",
+            "type": "address"
+          },
+          {
+            "internalType": "uint256",
+            "name": "Price",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "DisplayReward",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256[]",
+            "name": "VideoIds",
+            "type": "uint256[]"
+          },
+          {
+            "internalType": "uint256[]",
+            "name": "AdIds",
+            "type": "uint256[]"
+          },
+          {
+            "internalType": "bool",
+            "name": "Listed",
+            "type": "bool"
+          }
+        ],
+        "internalType": "struct ITokens.Room",
         "name": "",
         "type": "tuple"
       }
@@ -376,6 +481,24 @@
     "inputs": [
       {
         "internalType": "uint256",
+        "name": "_requestId",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256[]",
+        "name": "_randomWords",
+        "type": "uint256[]"
+      }
+    ],
+    "name": "rawFulfillRandomWords",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
         "name": "_AdId",
         "type": "uint256"
       },
@@ -386,6 +509,19 @@
       }
     ],
     "name": "removePublishingRoom",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "_videoId",
+        "type": "uint256"
+      }
+    ],
+    "name": "serveAd",
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"
